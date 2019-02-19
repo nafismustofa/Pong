@@ -73,22 +73,22 @@ class Game:
                         else:
                             self.__is_paused = False
 
-            #Set Background Color
-            self.__game_display.fill(self.__color_black)
-
-            #Initialize Paddles
-            self.__paddles()
-
-            #Initialize Ball
-            self.__ball()
-
-            #Display Update
             if self.__is_paused == False:
+                #Set Background Color
+                self.__game_display.fill(self.__color_black)
+
+                #Initialize Paddles
+                self.__paddles()
+
+                #Initialize Ball
+                self.__ball()
+
+                #Display Update
                 pygame.display.update()
 
-            #Set FPS
-            self.__clock.tick(self.__FPS)
-        
+                #FPS Setup
+                self.__clock.tick(self.__FPS)
+            
         #Quiting Functions
         pygame.quit()
         quit()
