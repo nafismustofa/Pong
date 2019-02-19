@@ -15,6 +15,8 @@ class Game:
 
     #Player Variables
     __start_with_player_1 = True
+    __player_1_score = 0
+    __player_2_score = 0
 
     #Paddles Variables
     __left_paddle_y = (__screen_height // 2) - 50
@@ -37,6 +39,16 @@ class Game:
         pygame.draw.rect(self.__game_display , self.__color_red , [10 , self.__left_paddle_y , 20 , 100]) #Left Paddle
         pygame.draw.rect(self.__game_display , self.__color_blue , [(self.__screen_width - 30) , self.__right_paddle_y , 20 , 100]) #Right Paddle
 
+        #Border Check
+        if self.__left_paddle_y <= 7:
+            self.__left_paddle_y += 10
+        if self.__left_paddle_y >= (self.__screen_height - 107):
+            self.__left_paddle_y -= 10
+        if self.__right_paddle_y <= 7:
+            self.__right_paddle_y += 10
+        if self.__right_paddle_y >= (self.__screen_height - 107):
+            self.__right_paddle_y -= 10
+
     #Ball Function
     def __ball(self):
         #Draw Ball
@@ -46,9 +58,67 @@ class Game:
         self.__ball_x += self.__ball_speed[0]
         self.__ball_y += self.__ball_speed[1]
 
-        #Collision Check
+        #Border Collision Check
         if (self.__ball_y - 15) < 0 or (self.__ball_y + 15) > self.__screen_height:
             self.__ball_speed[1] = -self.__ball_speed[1]
+        if (self.__ball_x - 15) <= 0:
+            self.__player_2_score += 1
+            self.__start_with_player_1 = True
+            self.__ball_x = self.__screen_width // 2
+            self.__ball_y = self.__screen_height // 2
+        if (self.__ball_x + 15) >= self.__screen_width:
+            self.__player_1_score += 1
+            self.__start_with_player_1 = False
+            self.__ball_x = self.__screen_width // 2
+            self.__ball_y = self.__screen_height // 2
+
+        #Paddle Collision Check
+        if(self.__ball_x - 15) <= 30 and (self.__ball_y >= self.__left_paddle_y and self.__ball_y <= (self.__left_paddle_y + 100)):
+            self.__ball_speed[0] = -self.__ball_speed[0]
+        if(self.__ball_x + 15) >= (self.__screen_width - 30) and (self.__ball_y >= self.__right_paddle_y and self.__ball_y <= (self.__right_paddle_y + 100)):
+            self.__ball_speed[0] = -self.__ball_speed[0]
+    
+    #Text Display
+    def __text(self):
+        #Fonts
+        title_font = pygame.font.SysFont(None , 30)
+        score__font = pygame.font.SysFont(None , 20)
+
+        #Title Text
+        title = title_font.render("PONG" , True , self.__color_white)
+        title_rect = title.get_rect()
+        title_rect.centerx = (self.__screen_width // 2)
+        title_rect.centery = 30
+
+        #Player 1 Score Text
+        player_1_score = score__font.render("Player 1 : {}" .format(self.__player_1_score) , True , self.__color_red)
+        player_1_score_rect = player_1_score.get_rect()
+        player_1_score_rect.centerx = 100
+        player_1_score_rect.centery = 50
+
+        #Player 2 Score Text
+        player_2_score = score__font.render("Player 2 : {}" .format(self.__player_2_score) , True , self.__color_blue)
+        player_2_score_rect = player_2_score.get_rect()
+        player_2_score_rect.centerx = (self.__screen_width - 100)
+        player_2_score_rect.centery = 50
+
+        #Display Texts
+        self.__game_display.blit(title , title_rect)
+        self.__game_display.blit(player_1_score , player_1_score_rect)
+        self.__game_display.blit(player_2_score , player_2_score_rect)
+
+    #Input Function
+    def __input(self):
+        input_key = pygame.key.get_pressed()
+
+        if input_key[pygame.K_w]:
+            self.__left_paddle_y -= 10
+        if input_key[pygame.K_s]:
+            self.__left_paddle_y += 10
+        if input_key[pygame.K_UP]:
+            self.__right_paddle_y -= 10
+        if input_key[pygame.K_DOWN]:
+            self.__right_paddle_y += 10
 
     #Main Display Function
     def game(self):
@@ -73,18 +143,24 @@ class Game:
                         else:
                             self.__is_paused = False
 
-            #Pause Function
+            #Pause Trigger
             if self.__is_paused == False:
+                #Game Input
+                self.__input()
+                
                 #Set Background Color
                 self.__game_display.fill(self.__color_black)
 
-                #Initialize Paddles
+                #Display Text
+                self.__text()
+
+                #Display Paddles
                 self.__paddles()
 
-                #Initialize Ball
+                #Display Ball
                 self.__ball()
 
-                #Display Update
+                #Screen Update
                 pygame.display.update()
 
                 #FPS Setup
