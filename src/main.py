@@ -1,7 +1,6 @@
-from display import Display
+from game import Game
 
 def main():
-    Display().display()
-
+    Game().game()
 if __name__ == "__main__":
     main()

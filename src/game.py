@@ -1,6 +1,6 @@
 import pygame
 
-class Display:
+class Game:
     #Variables
     __is_runnning = True
     __FPS = 60
@@ -24,7 +24,7 @@ class Display:
         pygame.draw.rect(self.__game_display , self.__color_white , [(self.screen_width - 30) , self.left_paddle_y , 20 , 100]) #Left Paddle
 
     #Main Display Function
-    def display(self):
+    def game(self):
         #Pygame Initialization
         pygame.init()
 
@@ -38,7 +38,7 @@ class Display:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.__is_runnning = False
-            
+
             #Set Background Color
             self.__game_display.fill(self.__color_black)
 
