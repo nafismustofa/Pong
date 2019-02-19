@@ -73,6 +73,7 @@ class Game:
                         else:
                             self.__is_paused = False
 
+            #Pause Function
             if self.__is_paused == False:
                 #Set Background Color
                 self.__game_display.fill(self.__color_black)
