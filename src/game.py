@@ -6,7 +6,7 @@ class Game:
         self.__is_running = True
         self.__is_paused = False
         self.__FPS = 60
-        self.__screen_size = (__screen_width , __screen_height) = (800 , 600)
+        self.__screen_size = (self.__screen_width ,self. __screen_height) = (800 , 600)
     
         #Colors
         self.__color_black = (0 , 0 , 0)
@@ -20,13 +20,13 @@ class Game:
         self.__player_2_score = 0
 
         #Paddles Variables
-        self.__left_paddle_y = (__screen_height // 2) - 50
-        self.__right_paddle_y = (__screen_height // 2) - 50
+        self.__left_paddle_y = (self.__screen_height // 2) - 50
+        self.__right_paddle_y = (self.__screen_height // 2) - 50
 
         #Ball Variables
-        self.__ball_x = __screen_width // 2
-        self.__ball_y = __screen_height // 2
-        if __start_with_player_1 == True:
+        self.__ball_x = self.__screen_width // 2
+        self.__ball_y = self.__screen_height // 2
+        if self.__start_with_player_1 == True:
             self.__ball_speed = [-4 , random.choice([4 , -4])]
         else:
             self.__ball_speed = [4 , random.choice([4 , -4])]
@@ -34,6 +34,7 @@ class Game:
         #Objects
         self.__game_display = None
         self.__clock = pygame.time.Clock()
+        self.__icon = pygame.image.load("./assets/pong_icon.png")
 
     #Paddles Function
     def __paddles(self):
@@ -129,6 +130,7 @@ class Game:
         #Display Setup
         self.__game_display = pygame.display.set_mode(self.__screen_size)
         pygame.display.set_caption("PONG")
+        pygame.display.set_icon(self.__icon)
 
         #Main Game Loop
         while self.__is_running:
