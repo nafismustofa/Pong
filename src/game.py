@@ -1,38 +1,39 @@
 import pygame , random
 
 class Game:
-    #Variables
-    __is_running = True
-    __is_paused = False
-    __FPS = 60
-    __screen_size = (__screen_width , __screen_height) = (800 , 600)
+    def __init__(self):
+        #Variables
+        self.__is_running = True
+        self.__is_paused = False
+        self.__FPS = 60
+        self.__screen_size = (__screen_width , __screen_height) = (800 , 600)
     
-    #Colors
-    __color_black = (0 , 0 , 0)
-    __color_white = (255 , 255 , 255)
-    __color_blue = (0 , 0 , 255)
-    __color_red = (255 , 0 , 0)
+        #Colors
+        self.__color_black = (0 , 0 , 0)
+        self.__color_white = (255 , 255 , 255)
+        self.__color_blue = (0 , 0 , 255)
+        self.__color_red = (255 , 0 , 0)
 
-    #Player Variables
-    __start_with_player_1 = True
-    __player_1_score = 0
-    __player_2_score = 0
+        #Player Variables
+        self.__start_with_player_1 = True
+        self.__player_1_score = 0
+        self.__player_2_score = 0
 
-    #Paddles Variables
-    __left_paddle_y = (__screen_height // 2) - 50
-    __right_paddle_y = (__screen_height // 2) - 50
+        #Paddles Variables
+        self.__left_paddle_y = (__screen_height // 2) - 50
+        self.__right_paddle_y = (__screen_height // 2) - 50
 
-    #Ball Variables
-    __ball_x = __screen_width // 2
-    __ball_y = __screen_height // 2
-    if __start_with_player_1 == True:
-        __ball_speed = [-4 , random.choice([4 , -4])]
-    else:
-        __ball_speed = [4 , random.choice([4 , -4])]
+        #Ball Variables
+        self.__ball_x = __screen_width // 2
+        self.__ball_y = __screen_height // 2
+        if __start_with_player_1 == True:
+            self.__ball_speed = [-4 , random.choice([4 , -4])]
+        else:
+            self.__ball_speed = [4 , random.choice([4 , -4])]
 
-    #Objects
-    __game_display = None
-    __clock = pygame.time.Clock()
+        #Objects
+        self.__game_display = None
+        self.__clock = pygame.time.Clock()
 
     #Paddles Function
     def __paddles(self):
